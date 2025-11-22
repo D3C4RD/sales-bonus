@@ -7,8 +7,8 @@
 
 function calculateSimpleRevenue(purchase, _product) {
    //Расчет выручки от операции
-   const discount = 1 - (_product.discount / 100);
-   return _product.sale_price * _product.quantity * discount;
+   const discount = 1 - (purchase.discount / 100);
+   return purchase.sale_price * purchase.quantity * discount;
 }
 
 /**
@@ -95,7 +95,7 @@ function analyzeSalesData(data, options) {
         record.items.forEach(item => {
             const product = productIndex[item.sku];
             const cost = product.purchase_price * item.quantity;
-            const revenue = calculateSimpleRevenue(record, item);
+            const revenue = calculateSimpleRevenue(item, record);
             const profit = revenue - cost;
             seller.profit += profit;
             if(!seller.products_sold[item.sku]) {
